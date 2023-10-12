@@ -5,6 +5,9 @@
         x:Class="AtitudeGpsMauiApp.AppShell"
         Shell.FlyoutBehavior="Disabled">
 
+    <Shell.TabBarBackgroundColor>Black</Shell.TabBarBackgroundColor>
+    <Shell.TabBarTitleColor>RoyalBlue</Shell.TabBarTitleColor>
+    <Shell.TabBarUnselectedColor>Grey</Shell.TabBarUnselectedColor>
     <TabBar>
         <ShellContent
             Title="Home"
