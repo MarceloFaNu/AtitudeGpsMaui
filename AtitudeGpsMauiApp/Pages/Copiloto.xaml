@@ -35,6 +35,9 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ImageButton
+                    Pressed="ibtn_Pressed"
+                    Released="ibtn_Released"
+                    x:Name="ibtnDesembarcadoParado"
                     BorderWidth="15"
                     BorderColor="DarkGray"
                     BackgroundColor="LightGrey"
@@ -42,6 +45,9 @@
                     Grid.Column="0"
                     Source="dp.png"/>
                 <ImageButton
+                    Pressed="ibtn_Pressed"
+                    Released="ibtn_Released"
+                    x:Name="ibtnDesembarcadoMovimento"
                     BorderWidth="15"
                     BorderColor="DarkGray"
                     BackgroundColor="LightGrey"
@@ -49,6 +55,9 @@
                     Grid.Column="1"
                     Source="dm.png"/>
                 <ImageButton
+                    Pressed="ibtn_Pressed"
+                    Released="ibtn_Released"
+                    x:Name="ibtnEmbarcadoParado"
                     BorderWidth="15"
                     BorderColor="DarkGray"
                     BackgroundColor="LightGrey"
@@ -56,6 +65,9 @@
                     Grid.Column="0"
                     Source="ep.png"/>
                 <ImageButton
+                    Pressed="ibtn_Pressed"
+                    Released="ibtn_Released"
+                    x:Name="ibtnEmbarcadoMovimento"
                     BorderWidth="15"
                     BorderColor="DarkGray"
                     BackgroundColor="LightGrey"
