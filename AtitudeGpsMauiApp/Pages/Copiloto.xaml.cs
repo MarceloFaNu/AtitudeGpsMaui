@@ -23,19 +23,7 @@ public partial class Copiloto : ContentPage
 		});
 	}
 
-	private void ibtn_Pressed(object sender, EventArgs e)
-	{
-        var ibtn = sender as ImageButton;
-
-        DesligaTodosBotoes();
-
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            ibtn.BackgroundColor = Colors.White;
-        });
-    }
-
-	private void ibtn_Released(object sender, EventArgs e)
+	private void ibtn_Cliked(object sender, EventArgs e)
 	{
         var ibtn = sender as ImageButton;
 
@@ -44,15 +32,15 @@ public partial class Copiloto : ContentPage
         MainThread.BeginInvokeOnMainThread(() =>
         {
             if (ibtn.Id == _ibtnId)
-			{
+            {
                 ibtn.BackgroundColor = Colors.LightGray;
-				_ibtnId = _ibtnDefaultId;
-			}
-			else
-			{
+                _ibtnId = _ibtnDefaultId;
+            }
+            else
+            {
                 ibtn.BackgroundColor = Colors.LightGreen;
-				_ibtnId = ibtn.Id;
-			}
+                _ibtnId = ibtn.Id;
+            }
         });
     }
 }
