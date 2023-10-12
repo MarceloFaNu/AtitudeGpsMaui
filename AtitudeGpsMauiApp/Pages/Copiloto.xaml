@@ -35,22 +35,30 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ImageButton
-                    BackgroundColor="Grey"
+                    BorderWidth="15"
+                    BorderColor="DarkGray"
+                    BackgroundColor="LightGrey"
                     Grid.Row="0"
                     Grid.Column="0"
                     Source="dp.png"/>
                 <ImageButton
-                    BackgroundColor="Grey"
+                    BorderWidth="15"
+                    BorderColor="DarkGray"
+                    BackgroundColor="LightGrey"
                     Grid.Row="0"
                     Grid.Column="1"
                     Source="dm.png"/>
                 <ImageButton
-                    BackgroundColor="Grey"
+                    BorderWidth="15"
+                    BorderColor="DarkGray"
+                    BackgroundColor="LightGrey"
                     Grid.Row="1"
                     Grid.Column="0"
                     Source="ep.png"/>
                 <ImageButton
-                    BackgroundColor="Grey"
+                    BorderWidth="15"
+                    BorderColor="DarkGray"
+                    BackgroundColor="LightGrey"
                     Grid.Row="1"
                     Grid.Column="1"
                     Source="em.png"/>
