@@ -115,7 +115,7 @@ namespace AtitudeGpsMauiApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Distância Mínima de Deslocamento em Metros.
+        ///   Looks up a localized string similar to Distância Mínima Considerada (mts).
         /// </summary>
         internal static string pkrDistanciaMinimaText {
             get {

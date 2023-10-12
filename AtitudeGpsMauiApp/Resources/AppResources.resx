@@ -136,7 +136,7 @@
     <value>Casas Decimais das Coordenadas</value>
   </data>
   <data name="pkrDistanciaMinimaText" xml:space="preserve">
-    <value>Distância Mínima de Deslocamento em Metros</value>
+    <value>Distância Mínima Considerada (mts)</value>
   </data>
   <data name="pkrLocationRequestTimeoutText" xml:space="preserve">
     <value>Timeout da Solicitação de Coordenadas (seg)</value>
