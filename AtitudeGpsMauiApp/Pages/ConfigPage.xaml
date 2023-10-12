@@ -1,12 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:AtitudeGpsMauiApp.Resources"
              x:Class="AtitudeGpsMauiApp.Pages.ConfigPage"
              Title="Opções">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style TargetType="Stepper">
+            <Setter Property="Margin" Value="0,0,0,20" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout
+            BackgroundColor="Black"
+            Orientation="Vertical">
+            <Label
+                Margin="20"
+                FontSize="Title"
+                HorizontalTextAlignment="Center"
+                Text="{x:Static resources:AppResources.ConfigPageTitulo}" />
+                
+            <Label
+                Text="{x:Static resources:AppResources.pkrTickIntervalText}" />
+            <Label
+                FontSize="Title"
+                BindingContext="{x:Reference Name=stpTickInterval}"
+                Text="{Binding Path=Value, StringFormat='{0}'}" />
+            <Stepper
+                x:Name="stpTickInterval"
+                Minimum="2"
+                Maximum="5"
+                Increment="1" />
+            
+            <Label
+                Text="{x:Static resources:AppResources.pkrNivelPrecisaoText}" />
+            <Picker
+                FontSize="Title"
+                Margin="0,0,0,20"
+                x:Name="pkrNivelPrecisao"
+                SelectedIndex="0"
+                Title="Selecione um nível de precisão"
+                TextColor="Cyan"
+                TitleColor="RoyalBlue">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Low</x:String>
+                        <x:String>Medium</x:String>
+                        <x:String>High</x:String>
+                        <x:String>Best</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            
+            <Label
+                Text="{x:Static resources:AppResources.pkrLocationRequestTimeoutText}" />
+            <Label
+                FontSize="Title"
+                BindingContext="{x:Reference Name=sptLocationRequestTimeout}"
+                Text="{Binding Path=Value, StringFormat='{0}'}" />
+            <Stepper
+                x:Name="sptLocationRequestTimeout"
+                Minimum="5"
+                Maximum="30"
+                Increment="5" />
+            
+            <Label
+                Text="{x:Static resources:AppResources.pkrDistanciaMinimaText}" />
+            <Label
+                FontSize="Title"
+                BindingContext="{x:Reference Name=stpDistanciaMinima}"
+                Text="{Binding Path=Value, StringFormat='{0}'}" />
+            <Stepper
+                x:Name="stpDistanciaMinima"
+                Minimum="5"
+                Maximum="40"
+                Increment="5" />
+            
+            <Label
+                Text="{x:Static resources:AppResources.pkrCasasDecimaisText}" />
+            <Label
+                FontSize="Title"
+                BindingContext="{x:Reference Name=stpCasasDecimais}"
+                Text="{Binding Path=Value, StringFormat='{0}'}" />
+            <Stepper
+                x:Name="stpCasasDecimais"
+                Minimum="4"
+                Maximum="7"
+                Increment="1" />
+            
+            <Button
+                x:Name="btnAplicarAlteracoes"
+                Margin="10"
+                Text="Aplicar Alterações"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
