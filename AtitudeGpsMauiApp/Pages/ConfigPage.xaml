@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:AtitudeGpsMauiApp.Resources"
+             xmlns:essentials="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              x:Class="AtitudeGpsMauiApp.Pages.ConfigPage"
              Title="Opções">
     <ContentPage.Resources>
@@ -46,11 +47,11 @@
                 TextColor="Cyan"
                 TitleColor="RoyalBlue">
                 <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Low</x:String>
-                        <x:String>Medium</x:String>
-                        <x:String>High</x:String>
-                        <x:String>Best</x:String>
+                    <x:Array Type="{x:Type essentials:GeolocationAccuracy}">
+                        <essentials:GeolocationAccuracy>Low</essentials:GeolocationAccuracy>
+                        <essentials:GeolocationAccuracy>Medium</essentials:GeolocationAccuracy>
+                        <essentials:GeolocationAccuracy>High</essentials:GeolocationAccuracy>
+                        <essentials:GeolocationAccuracy>Best</essentials:GeolocationAccuracy>
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>

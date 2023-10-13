@@ -5,6 +5,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+        DesativaLed(null);
 	}
 
     void AtivaLed(object sender)

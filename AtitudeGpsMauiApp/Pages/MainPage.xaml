@@ -85,7 +85,6 @@
                 Clicked="btnMonitorar_Clicked"
                 Text="Monitorar"/>
             <Button
-                IsEnabled="false"
                 Grid.Row="0"
                 Grid.Column="1"
                 x:Name="btnParar"
