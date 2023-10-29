@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:AtitudeGpsMauiApp.Resources"
-             x:Class="AtitudeGpsMauiApp.Pages.Copiloto"
+             x:Class="AtitudeGpsMauiApp.Pages.CopilotoPage"
              Title="Copiloto">
     <ContentPage.Resources>
         <Style TargetType="Label">
@@ -35,7 +35,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ImageButton
-                    Clicked="ibtn_Cliked"
+                    Clicked="ibtnDesembarcadoParado_Clicked"
                     x:Name="ibtnDesembarcadoParado"
                     BorderWidth="15"
                     BorderColor="DarkGray"
@@ -44,7 +44,7 @@
                     Grid.Column="0"
                     Source="dp.png"/>
                 <ImageButton
-                    Clicked="ibtn_Cliked"
+                    Clicked="ibtnDesembarcadoMovimento_Clicked"
                     x:Name="ibtnDesembarcadoMovimento"
                     BorderWidth="15"
                     BorderColor="DarkGray"
@@ -53,7 +53,7 @@
                     Grid.Column="1"
                     Source="dm.png"/>
                 <ImageButton
-                    Clicked="ibtn_Cliked"
+                    Clicked="ibtnEmbarcadoParado_Clicked"
                     x:Name="ibtnEmbarcadoParado"
                     BorderWidth="15"
                     BorderColor="DarkGray"
@@ -62,7 +62,7 @@
                     Grid.Column="0"
                     Source="ep.png"/>
                 <ImageButton
-                    Clicked="ibtn_Cliked"
+                    Clicked="ibtnEmbarcadoMovimento_Clicked"
                     x:Name="ibtnEmbarcadoMovimento"
                     BorderWidth="15"
                     BorderColor="DarkGray"

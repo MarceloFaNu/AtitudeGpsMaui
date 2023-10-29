@@ -2,10 +2,11 @@
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
+    public static IServiceProvider Services => Application.Current.Handler.MauiContext.Services;
 
-		MainPage = new AppShell();
-	}
+    public App()
+    {
+        InitializeComponent();
+        MainPage = new AppShell();
+    }
 }

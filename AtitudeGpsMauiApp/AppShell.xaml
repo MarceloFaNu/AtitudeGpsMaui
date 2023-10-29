@@ -19,7 +19,7 @@
             Route="Config" />
         <ShellContent
             Title="Copiloto"
-            ContentTemplate="{DataTemplate pages:Copiloto}"
+            ContentTemplate="{DataTemplate pages:CopilotoPage}"
             Route="Copiloto" />
     </TabBar>
 

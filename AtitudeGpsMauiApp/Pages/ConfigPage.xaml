@@ -14,88 +14,99 @@
         </Style>
     </ContentPage.Resources>
     <ScrollView>
-        <StackLayout
-            Padding="10"
-            BackgroundColor="Black"
-            Orientation="Vertical">
+        <Grid
+            BackgroundColor="Black">
             <Label
-                Margin="20"
-                FontSize="Title"
-                HorizontalTextAlignment="Center"
-                Text="{x:Static resources:AppResources.ConfigPageTitulo}" />
-                
-            <Label
-                Text="{x:Static resources:AppResources.pkrTickIntervalText}" />
-            <Label
-                FontSize="Title"
-                BindingContext="{x:Reference Name=stpTickInterval}"
-                Text="{Binding Path=Value, StringFormat='{0}'}" />
-            <Stepper
-                x:Name="stpTickInterval"
-                Minimum="2"
-                Maximum="5"
-                Increment="1" />
-            
-            <Label
-                Text="{x:Static resources:AppResources.pkrNivelPrecisaoText}" />
-            <Picker
-                FontSize="Title"
-                Margin="0,0,0,20"
-                x:Name="pkrNivelPrecisao"
-                SelectedIndex="0"
-                Title="Selecione um nível de precisão"
-                TextColor="Cyan"
-                TitleColor="RoyalBlue">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type essentials:GeolocationAccuracy}">
-                        <essentials:GeolocationAccuracy>Low</essentials:GeolocationAccuracy>
-                        <essentials:GeolocationAccuracy>Medium</essentials:GeolocationAccuracy>
-                        <essentials:GeolocationAccuracy>High</essentials:GeolocationAccuracy>
-                        <essentials:GeolocationAccuracy>Best</essentials:GeolocationAccuracy>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-            
-            <Label
-                Text="{x:Static resources:AppResources.pkrLocationRequestTimeoutText}" />
-            <Label
-                FontSize="Title"
-                BindingContext="{x:Reference Name=sptLocationRequestTimeout}"
-                Text="{Binding Path=Value, StringFormat='{0}'}" />
-            <Stepper
-                x:Name="sptLocationRequestTimeout"
-                Minimum="5"
-                Maximum="30"
-                Increment="5" />
-            
-            <Label
-                Text="{x:Static resources:AppResources.pkrDistanciaMinimaText}" />
-            <Label
-                FontSize="Title"
-                BindingContext="{x:Reference Name=stpDistanciaMinima}"
-                Text="{Binding Path=Value, StringFormat='{0}'}" />
-            <Stepper
-                x:Name="stpDistanciaMinima"
-                Minimum="5"
-                Maximum="40"
-                Increment="5" />
-            
-            <Label
-                Text="{x:Static resources:AppResources.pkrCasasDecimaisText}" />
-            <Label
-                FontSize="Title"
-                BindingContext="{x:Reference Name=stpCasasDecimais}"
-                Text="{Binding Path=Value, StringFormat='{0}'}" />
-            <Stepper
-                x:Name="stpCasasDecimais"
-                Minimum="4"
-                Maximum="7"
-                Increment="1" />
-            
-            <Button
-                x:Name="btnAplicarAlteracoes"
-                Margin="10"
-                Text="Aplicar Alterações"/>
-        </StackLayout>
+                x:Name="lblMonitorEmAtividade"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                Text="Tela indisponível: monitor ativo." />
+            <StackLayout
+                x:Name="stkPrincipal"
+                Padding="10"
+                BackgroundColor="Black"
+                Orientation="Vertical">
+                <Label
+                    Margin="20"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static resources:AppResources.ConfigPageTitulo}" />
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrTickIntervalText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=stpTickInterval}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="stpTickInterval"
+                    Minimum="2"
+                    Maximum="5"
+                    Increment="1" />
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrNivelPrecisaoText}" />
+                <Picker
+                    FontSize="Title"
+                    Margin="0,0,0,20"
+                    x:Name="pkrNivelPrecisao"
+                    SelectedIndex="0"
+                    Title="Selecione um nível de precisão"
+                    TextColor="Cyan"
+                    TitleColor="RoyalBlue">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type essentials:GeolocationAccuracy}">
+                            <essentials:GeolocationAccuracy>Low</essentials:GeolocationAccuracy>
+                            <essentials:GeolocationAccuracy>Medium</essentials:GeolocationAccuracy>
+                            <essentials:GeolocationAccuracy>High</essentials:GeolocationAccuracy>
+                            <essentials:GeolocationAccuracy>Best</essentials:GeolocationAccuracy>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrLocationRequestTimeoutText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=sptLocationRequestTimeout}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="sptLocationRequestTimeout"
+                    Minimum="5"
+                    Maximum="30"
+                    Increment="5" />
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrDistanciaMinimaText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=stpDistanciaMinima}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="stpDistanciaMinima"
+                    Minimum="5"
+                    Maximum="40"
+                    Increment="5" />
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrCasasDecimaisText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=stpCasasDecimais}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="stpCasasDecimais"
+                    Minimum="4"
+                    Maximum="7"
+                    Increment="1" />
+
+                <Button
+                    x:Name="btnAplicarAlteracoes"
+                    Clicked="btnAplicarAlteracoes_Clicked"
+                    Margin="10"
+                    Text="Aplicar Alterações"/>
+            </StackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>

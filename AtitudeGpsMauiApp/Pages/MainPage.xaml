@@ -94,12 +94,13 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 x:Name="btnEnviar"
+                Clicked="btnEnviar_Clicked"
                 Text="Enviar" />
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
-                IsVisible="true"
                 x:Name="btnLimparLog"
+                Clicked="btnLimparLog_Clicked"
                 Text="Limpar Logs" />
         </Grid>
     </StackLayout>

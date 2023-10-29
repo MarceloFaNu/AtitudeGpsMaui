@@ -80,6 +80,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\CopilotoPage.xaml.cs">
+	    <DependentUpon>CopilotoPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Resources\AppResources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -98,9 +101,13 @@
 	  <MauiXaml Update="Pages\ConfigPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Copiloto.xaml">
+	  <MauiXaml Update="Pages\CopilotoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Domain\Dtos\" />
 	</ItemGroup>
 
 </Project>

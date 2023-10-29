@@ -1,13 +1,13 @@
-﻿using AtitudeGpsMauiApp.Domain.Constantes;
+﻿#if ANDROID
+using AtitudeGpsMauiApp.Platforms.Android.Implementations;
+using AtitudeGpsMauiApp.Platforms.Android.Interfaces;
+#endif
+
+using AtitudeGpsMauiApp.Domain.Constantes;
 using AtitudeGpsMauiApp.Infrastructure.Implementations;
 using AtitudeGpsMauiApp.Infrastructure.Interfaces;
 using AtitudeGpsMauiApp.Services.Implementations;
 using AtitudeGpsMauiApp.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AtitudeGpsMauiApp.Configuration
 {
@@ -24,6 +24,12 @@ namespace AtitudeGpsMauiApp.Configuration
             mauiBuilder.Services.AddSingleton<IMessageBoxService, MessageBoxService>();
             mauiBuilder.Services.AddSingleton<ILeitorDeCoordenadas, LeitorDeCoordenadas>();
             mauiBuilder.Services.AddSingleton<IColetorDeCoordenadas, ColetorDeCoordenadas>();
+            mauiBuilder.Services.AddSingleton<IOperadorDeDiretorios, OperadorDeDiretorios>();
+
+#if ANDROID
+            mauiBuilder.Services.AddSingleton<IColetorDeCoordenadasServiceManager, ColetorDeCoordenadasServiceManager>();
+            mauiBuilder.Services.AddSingleton<IColetorDeCoordenadasServiceNotification, ColetorDeCoordenadasServiceNotification>();
+#endif
         }
 
         private static void ConfigureAppProperties()

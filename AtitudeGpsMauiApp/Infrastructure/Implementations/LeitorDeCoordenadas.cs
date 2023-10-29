@@ -1,10 +1,5 @@
 ﻿using AtitudeGpsMauiApp.Domain.Constantes;
 using AtitudeGpsMauiApp.Infrastructure.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AtitudeGpsMauiApp.Infrastructure.Implementations
 {
@@ -19,11 +14,11 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
             _locationRequest.Timeout = TimeSpan.FromSeconds(timeout);
         }
 
-        public Location TentaObterLocalizacaoUmaUnicaVez()
+        public async Task<Location> TentaObterLocalizacaoUmaUnicaVezAsync()
         {
             try
             {
-                var loc = Geolocation.GetLocationAsync(_locationRequest).GetAwaiter().GetResult();
+                var loc = await Geolocation.Default.GetLocationAsync(_locationRequest);
 
                 if (loc == null)
                     throw new NullReferenceException("Não foi possível obter coordenadas GPS. Tente novamente am alguns instantes.");
