@@ -19,6 +19,7 @@ namespace AtitudeGpsMauiApp.Services.Implementations
         private readonly IMessageBoxService _msgBox;
         private readonly ILeitorDeCoordenadas _leitorDeCoordenadas;
         private readonly IOperadorDeDiretorios _operadorDeDiretorios;
+        private readonly ISequencerDeEntidades _sequencerDeEntidades;
         private readonly ConversorDeCoordenadas _conversorDeCoordenadas;
 
         public ColetorDeCoordenadas()
@@ -29,6 +30,7 @@ namespace AtitudeGpsMauiApp.Services.Implementations
             _snapshots = new Snapshot[5];
             _msgBox = App.Services.GetService<IMessageBoxService>();
             _leitorDeCoordenadas = App.Services.GetService<ILeitorDeCoordenadas>();
+            _sequencerDeEntidades = App.Services.GetService<ISequencerDeEntidades>();
             _operadorDeDiretorios = App.Services.GetService<IOperadorDeDiretorios>();
             _conversorDeCoordenadas = new();
         }
@@ -74,8 +76,7 @@ namespace AtitudeGpsMauiApp.Services.Implementations
                     TipoDeLog = TipoDeLogEnum.Monitor,
                     Latitude = loc.Latitude,
                     Longitude = loc.Longitude,
-                    MomentumInicial = agora.Ticks,
-                    MomentumFinal = agora.Ticks,
+                    Momentum = agora.Ticks,
                     Intervalo = PropriedadesDaAplicacao.IntervaloMinimo
                 };
 
@@ -196,6 +197,8 @@ namespace AtitudeGpsMauiApp.Services.Implementations
 
         private void LogaGps(Snapshot snapshot)
         {
+            snapshot.Id = _sequencerDeEntidades.ObtemProximoIdParaMonitor();
+            snapshot.CopilotoId = _sequencerDeEntidades.ObtemIdAtualParaCopiloto();
             string locAtualJsonObject = JsonSerializer.Serialize(snapshot);
             System.Diagnostics.Debug.WriteLine(snapshot);
             _operadorDeDiretorios.AdicionaLinhaAoLogDoMonitor(snapshot);
