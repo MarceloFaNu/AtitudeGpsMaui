@@ -25,6 +25,7 @@ namespace AtitudeGpsMauiApp.Configuration
             mauiBuilder.Services.AddSingleton<ILeitorDeCoordenadas, LeitorDeCoordenadas>();
             mauiBuilder.Services.AddSingleton<IColetorDeCoordenadas, ColetorDeCoordenadas>();
             mauiBuilder.Services.AddSingleton<IOperadorDeDiretorios, OperadorDeDiretorios>();
+            mauiBuilder.Services.AddSingleton<ISequencerDeEntidades, SequencerDeEntidades>();
 
 #if ANDROID
             mauiBuilder.Services.AddSingleton<IColetorDeCoordenadasServiceManager, ColetorDeCoordenadasServiceManager>();
