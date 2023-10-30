@@ -6,7 +6,5 @@ namespace AtitudeGpsMauiApp.Core.Models
     {
         public int Id { get; set; }
         public TipoDeLogEnum TipoDeLog { get; set; }
-        public long MomentumInicial { get; set; }
-        public long MomentumFinal { get; set; }
     }
 }

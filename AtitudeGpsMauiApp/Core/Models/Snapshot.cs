@@ -4,12 +4,14 @@ namespace AtitudeGpsMauiApp.Core.Models
 {
     public class Snapshot : LogModelBase
     {
+        public int CopilotoId { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double DistanciaEmMetros { get; set; }
         public double MetrosPorSegundo { get; set; }
         public double KilometrosPorHora { get; set; }
         public int Intervalo { get; set; }
+        public long Momentum { get; set; }
 
         public Snapshot CloneShallow()
         {
@@ -27,7 +29,7 @@ namespace AtitudeGpsMauiApp.Core.Models
                 DistanceUnits.Kilometers)), 2);
 
             // segundos
-            long delta_T = (this.MomentumInicial - snapshotAnterior.MomentumInicial) / 10_000_000;
+            long delta_T = (this.Momentum - snapshotAnterior.Momentum) / 10_000_000;
 
             // metros / segundo
             MetrosPorSegundo = Math.Round(DistanciaEmMetros / delta_T, 2);

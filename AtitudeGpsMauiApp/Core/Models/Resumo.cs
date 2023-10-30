@@ -16,7 +16,6 @@
             InicioDoMonitoramento = inicioDoMonitoramento;
             FinalDoMonitoramento = finalDoMonitoramento;
             TempoTotalDoMonitoramentoEmMinutos = Math.Round((finalDoMonitoramento - inicioDoMonitoramento).TotalMinutes);
-            MomentumInicial = inicioDoMonitoramento.Ticks;
         }
     }
 }

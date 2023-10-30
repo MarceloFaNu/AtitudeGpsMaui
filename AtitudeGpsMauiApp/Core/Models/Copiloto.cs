@@ -9,6 +9,7 @@ namespace AtitudeGpsMauiApp.Core.Models
 {
     public class Copiloto : LogModelBase
     {
+        public int ResumoId { get; set; }
         public AtitudeEnum Atitude { get; set; }
     }
 }
