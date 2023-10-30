@@ -1,6 +1,7 @@
 using AtitudeGpsMauiApp.Core.Models;
 using AtitudeGpsMauiApp.Domain.Enumeradores;
 using AtitudeGpsMauiApp.Infrastructure.Interfaces;
+using AtitudeGpsMauiApp.Services.Implementations;
 using AtitudeGpsMauiApp.Services.Interfaces;
 
 namespace AtitudeGpsMauiApp.Pages;
@@ -9,14 +10,17 @@ public partial class CopilotoPage : ContentPage
 {
     private Guid _ibtnId;
     private AtitudeEnum _atitudeEnumAtual;
+
     private readonly Guid _ibtnDefaultId;
     private readonly IOperadorDeDiretorios _operadorDeDiretorios;
+    private readonly ISequencerDeEntidades _sequencerDeEntidades;
     private readonly IColetorDeCoordenadasServiceManager _coletorManager;
 
     public CopilotoPage()
     {
         InitializeComponent();
         _operadorDeDiretorios = App.Services.GetService<IOperadorDeDiretorios>();
+        _sequencerDeEntidades = App.Services.GetService<ISequencerDeEntidades>();
         _coletorManager = App.Services.GetService<IColetorDeCoordenadasServiceManager>();
     }
 
@@ -63,14 +67,7 @@ public partial class CopilotoPage : ContentPage
 
         if (novaAtitudeEnum != _atitudeEnumAtual)
         {
-            var copiloto = new Copiloto
-            {
-                TipoDeLog = TipoDeLogEnum.Copiloto,
-                MomentumInicial = DateTime.Now.Ticks,
-                Atitude = novaAtitudeEnum
-            };
-
-            _operadorDeDiretorios.AdicionaLinhaAoLogDoCopiloto(copiloto);
+            LogaAtitudeAtual(novaAtitudeEnum);
         }
 
         _atitudeEnumAtual = novaAtitudeEnum;
@@ -85,5 +82,20 @@ public partial class CopilotoPage : ContentPage
             this.ibtnEmbarcadoParado.BackgroundColor = Colors.LightGray;
             this.ibtnEmbarcadoMovimento.BackgroundColor = Colors.LightGray;
         });
+    }
+
+    private void LogaAtitudeAtual(AtitudeEnum novaAtitudeEnum)
+    {
+        int id = _sequencerDeEntidades.ObtemProximoIdParaCopiloto();
+
+        var copiloto = new Copiloto
+        {
+            Id = id,
+            ResumoId = _sequencerDeEntidades.ObtemIdAtualParaResumo(),
+            TipoDeLog = TipoDeLogEnum.Copiloto,
+            Atitude = novaAtitudeEnum
+        };
+
+        _operadorDeDiretorios.AdicionaLinhaAoLogDoCopiloto(copiloto);
     }
 }

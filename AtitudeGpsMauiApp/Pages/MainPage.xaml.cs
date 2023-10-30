@@ -11,13 +11,14 @@ namespace AtitudeGpsMauiApp.Pages;
 public partial class MainPage : ContentPage
 {
     #region Initialize
-    private DateTime _inicioDoMonitoramento;
     private int _ticks;
     private bool _botaoMonitorOcupado;
+    private static DateTime _inicioDoMonitoramento;
 
     private readonly IMessageBoxService _msgBox;
     private readonly ILeitorDeCoordenadas _leitorDeCoordenadas;
     private readonly IOperadorDeDiretorios _operadorDeDiretorios;
+    private readonly ISequencerDeEntidades _sequencerDeEntidades;
     private readonly IColetorDeCoordenadasServiceManager _coletorManager;
 
     public MainPage()
@@ -30,11 +31,12 @@ public partial class MainPage : ContentPage
             _msgBox = App.Services.GetService<IMessageBoxService>();
             _leitorDeCoordenadas = App.Services.GetService<ILeitorDeCoordenadas>();
             _operadorDeDiretorios = App.Services.GetService<IOperadorDeDiretorios>();
+            _sequencerDeEntidades = App.Services.GetService<ISequencerDeEntidades>();
             _coletorManager = App.Services.GetService<IColetorDeCoordenadasServiceManager>();
 
-            MessagingCenter.Subscribe<Application, string>(App.Current, "ticks", this.AdicionaUmTick);
             MessagingCenter.Subscribe<Application>(App.Current, "ledOn", this.AtivaLed);
             MessagingCenter.Subscribe<Application>(App.Current, "ledOff", this.DesativaLed);
+            MessagingCenter.Subscribe<Application, string>(App.Current, "ticks", this.AdicionaUmTick);
 
             // Enquanto o serviço estiver em execução, todo o aplicativo também estará. A linha abaixo
             // não faz muito sentido já que, ao iniciar o aplicativo, o serviço nunca estará em execução e,
@@ -47,6 +49,19 @@ public partial class MainPage : ContentPage
             DisplayAlert("Erro", ex.Message, "Ok");
             Application.Current.Quit();
         }
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
+        PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
+
+        //#if ANDROID
+        //        if (Permissions.ShouldShowRationale<Permissions.LocationAlways>() || Permissions.ShouldShowRationale<Permissions.StorageWrite>())
+        //            Application.Current.Quit();
+        //#endif
     }
     #endregion
 
@@ -61,8 +76,14 @@ public partial class MainPage : ContentPage
             }
 
             _botaoMonitorOcupado = true;
+
+            _ = _sequencerDeEntidades.ObtemProximoIdParaResumo();
+            _ = _sequencerDeEntidades.ObtemProximoIdParaCopiloto();
+            this.LogaCopilotoInicial();
+
             _ = await _leitorDeCoordenadas.TentaObterLocalizacaoUmaUnicaVezAsync();
             _inicioDoMonitoramento = DateTime.Now;
+
             MessagingCenter.Send(App.Current, "ledOn");
 
             if (_coletorManager.IsServicoEmExecucao() == false)
@@ -101,7 +122,10 @@ public partial class MainPage : ContentPage
         if (!_botaoMonitorOcupado) return;
 
         _coletorManager.EncerraServico();
-        _operadorDeDiretorios.AdicionaLinhaAoLogDoResumo(CriaResumo());
+
+        var resumo = CriaResumo();
+        _operadorDeDiretorios.AdicionaLinhaAoLogDoResumo(resumo);
+
         _botaoMonitorOcupado = false;
     }
 
@@ -155,6 +179,7 @@ public partial class MainPage : ContentPage
         }
 
         _operadorDeDiretorios.LimpaLogs();
+        _sequencerDeEntidades.ReiniciaTodasSequencias();
         _ticks = 0;
 
         this.lblTicks.Text = "Ticks: ";
@@ -226,6 +251,7 @@ public partial class MainPage : ContentPage
     {
         return new Resumo(_inicioDoMonitoramento, DateTime.Now)
         {
+            Id = _sequencerDeEntidades.ObtemIdAtualParaResumo(),
             TipoDeLog = TipoDeLogEnum.Resumo,
             FatorDeCasasDecimais = PropriedadesDaAplicacao.FatorDeCasasDecimais,
             IntervaloMinimoEmSegundos = PropriedadesDaAplicacao.IntervaloMinimo,
@@ -235,17 +261,17 @@ public partial class MainPage : ContentPage
         };
     }
 
-    protected override async void OnAppearing()
+    private void LogaCopilotoInicial()
     {
-        base.OnAppearing();
+        var copiloto = new Copiloto
+        {
+            Id = _sequencerDeEntidades.ObtemIdAtualParaCopiloto(),
+            ResumoId = _sequencerDeEntidades.ObtemIdAtualParaResumo(),
+            TipoDeLog = TipoDeLogEnum.Copiloto,
+            Atitude = AtitudeEnum.Nada
+        };
 
-        PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
-        PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
-
-//#if ANDROID
-//        if (Permissions.ShouldShowRationale<Permissions.LocationAlways>() || Permissions.ShouldShowRationale<Permissions.StorageWrite>())
-//            Application.Current.Quit();
-//#endif
+        _operadorDeDiretorios.AdicionaLinhaAoLogDoCopiloto(copiloto);
     }
 }
 
