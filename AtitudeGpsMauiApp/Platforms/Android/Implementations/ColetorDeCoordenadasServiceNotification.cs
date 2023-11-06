@@ -4,6 +4,7 @@ using Android.OS;
 using AndroidX.Core.App;
 using AtitudeGpsMauiApp.Platforms.Android.Implementations;
 using AtitudeGpsMauiApp.Platforms.Android.Interfaces;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 [assembly: Microsoft.Maui.Controls.Dependency(typeof(ColetorDeCoordenadasServiceNotification))]
 namespace AtitudeGpsMauiApp.Platforms.Android.Implementations
@@ -36,12 +37,19 @@ namespace AtitudeGpsMauiApp.Platforms.Android.Implementations
             // estes dados podem ser lidos pela Main Activity quando ela for instanciada ou reutilizada após o clique do usuário
             operacao.PutExtra("Algum título aqui", "Alguma mensagem aqui");
 
+            PendingIntentFlags pendingIntentFlags = PendingIntentFlags.UpdateCurrent;
+
+            if (global::Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.S)
+            {
+                pendingIntentFlags = PendingIntentFlags.Mutable;
+            }
+
             // A classe PendingIntent informa ao Android que a Intent deverá
             // ser executada em um próximo momento quando certas condições
             // forem satisfeitas. O enumerador PendingIntentFlags indica
             // ao Android qual providência deverá ser tomada caso a PendingIntent
             // já tenha sido, ou não, iniciada anteriormente
-            var condicoesDaOperacao = PendingIntent.GetActivity(context, 0, operacao, PendingIntentFlags.UpdateCurrent);
+            var condicoesDaOperacao = PendingIntent.GetActivity(context, 0, operacao, pendingIntentFlags);
 
             var builderDaNotificacao = new NotificationCompat.Builder(context, ID_DO_CANAL_DA_NOTIFICACAO)
               .SetContentTitle("Titulo da Notificação")
