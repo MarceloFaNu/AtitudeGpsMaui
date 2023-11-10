@@ -1,14 +1,25 @@
 ﻿using AtitudeGpsMauiApp.Core.Models;
 using AtitudeGpsMauiApp.Infrastructure.Interfaces;
+using System.IO.Compression;
 using System.Text.Json;
 
 namespace AtitudeGpsMauiApp.Infrastructure.Implementations
 {
     public class OperadorDeDiretorios : IOperadorDeDiretorios
     {
-        private readonly string _resumoLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "resumo.log");
-        private readonly string _monitorLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "monitor.log");
-        private readonly string _copilotoLog = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "copiloto.log");
+        private static readonly string _diretorioApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        private static readonly string _diretorioLogs = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "logs");
+        private static readonly string _resumoLog = Path.Combine(_diretorioLogs, "resumo.txt");
+        private static readonly string _monitorLog = Path.Combine(_diretorioLogs, "monitor.txt");
+        private static readonly string _copilotoLog = Path.Combine(_diretorioLogs, "copiloto.txt");
+
+        public OperadorDeDiretorios()
+        {
+            if (!Directory.Exists(_diretorioLogs))
+            {
+                Directory.CreateDirectory(_diretorioLogs);
+            }
+        }
 
         public bool ExisteArquivoDeLogDoResumo()
         {
@@ -73,11 +84,29 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
             return new FileInfo(_copilotoLog).Length;
         }
 
-        public void LimpaLogs()
+        public string CriaZipParaEntrega(string idDoArquivo)
+        {
+            string caminhoDoArquivoZip = Path.Combine(_diretorioApp, "AtitudeGpsLogs_" +  idDoArquivo + ".zip");
+            ZipFile.CreateFromDirectory(_diretorioLogs, caminhoDoArquivoZip);
+            return caminhoDoArquivoZip;
+        }
+
+        public void ApagaZipDeEntrega(string idDoArquivo)
+        {
+            string caminhoDoArquivoZip = Path.Combine(_diretorioApp, "AtitudeGpsLogs_" + idDoArquivo + ".zip");
+            if (File.Exists(caminhoDoArquivoZip))
+            {
+                File.Delete(caminhoDoArquivoZip);
+            }
+        }
+
+        public void LimpaLogs(string idDoArquivoZip)
         {
             File.WriteAllText(_resumoLog, "");
             File.WriteAllText(_monitorLog, "");
             File.WriteAllText(_copilotoLog, "");
+
+            ApagaZipDeEntrega(idDoArquivoZip);
         }
     }
 }
