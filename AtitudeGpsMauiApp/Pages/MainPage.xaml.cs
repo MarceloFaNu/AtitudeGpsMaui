@@ -55,8 +55,19 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
-        PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
+        var locationAlwaysStatusDaPermissao = await Permissions.CheckStatusAsync<Permissions.LocationAlways>();
+        var locationWhenInUseStatusDaPermissao = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        var StorageWriteStatusDaPermissao = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+
+        if ((locationAlwaysStatusDaPermissao == PermissionStatus.Denied && locationWhenInUseStatusDaPermissao == PermissionStatus.Denied) ||
+            StorageWriteStatusDaPermissao == PermissionStatus.Denied)
+        {
+            await _msgBox.ShowAsync("O aplicativo precisa de permissão para utilizar Localização, Armazenamento e Notificações. Tchau, obrigado.");
+            Application.Current.Quit();
+        }
+
+        //PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
+        //PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
 
         //#if ANDROID
         //        if (Permissions.ShouldShowRationale<Permissions.LocationAlways>() || Permissions.ShouldShowRationale<Permissions.StorageWrite>())
@@ -77,6 +88,7 @@ public partial class MainPage : ContentPage
 
             _botaoMonitorOcupado = true;
 
+            _operadorDeDiretorios.ApagaZipDeEntrega(_inicioDoMonitoramento.Ticks.ToString());
             _ = _sequencerDeEntidades.ObtemProximoIdParaResumo();
             _ = _sequencerDeEntidades.ObtemProximoIdParaCopiloto();
             this.LogaCopilotoInicial();
@@ -152,14 +164,13 @@ public partial class MainPage : ContentPage
 
             var compartilhamento = new ShareMultipleFilesRequest() { Title = "Atitude GPS Logs" };
 
-            if (_operadorDeDiretorios.ExisteArquivoDeLogDoResumo())
-                compartilhamento.Files.Add(new ShareFile(_operadorDeDiretorios.ObtemCaminhoDoArquivoLogDoResumo()));
-
-            if (_operadorDeDiretorios.ExisteArquivoDeLogDoMonitor())
-                compartilhamento.Files.Add(new ShareFile(_operadorDeDiretorios.ObtemCaminhoDoArquivoLogDoMonitor()));
-
-            if (_operadorDeDiretorios.ExisteArquivoDeLogDoCopiloto())
-                compartilhamento.Files.Add(new ShareFile(_operadorDeDiretorios.ObtemCaminhoDoArquivoLogDoCopiloto()));
+            if (_operadorDeDiretorios.ExisteArquivoDeLogDoResumo() &&
+                _operadorDeDiretorios.ExisteArquivoDeLogDoMonitor() &&
+                _operadorDeDiretorios.ExisteArquivoDeLogDoCopiloto())
+            {
+                string caminhoDoArquivoDeEntrega = _operadorDeDiretorios.CriaZipParaEntrega(_inicioDoMonitoramento.Ticks.ToString());
+                compartilhamento.Files.Add(new ShareFile(caminhoDoArquivoDeEntrega));
+            }
 
             if (compartilhamento.Files.Count > 0)
                 await Share.RequestAsync(compartilhamento);
@@ -178,7 +189,7 @@ public partial class MainPage : ContentPage
             return;
         }
 
-        _operadorDeDiretorios.LimpaLogs();
+        _operadorDeDiretorios.LimpaLogs(_inicioDoMonitoramento.Ticks.ToString());
         _sequencerDeEntidades.ReiniciaTodasSequencias();
         _ticks = 0;
 
