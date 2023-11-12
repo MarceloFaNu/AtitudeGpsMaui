@@ -15,24 +15,26 @@ namespace AtitudeGpsMauiApp.Services.Implementations
         private bool _online;
         private int _nivelDaAmostra;
         private bool _coletorInicializado;
-        private Snapshot[] _snapshots;
+        private Snapshot[] _snapshotsObtidosDoGps;
         private readonly IMessageBoxService _msgBox;
         private readonly ILeitorDeCoordenadas _leitorDeCoordenadas;
         private readonly IOperadorDeDiretorios _operadorDeDiretorios;
         private readonly ISequencerDeEntidades _sequencerDeEntidades;
         private readonly ConversorDeCoordenadas _conversorDeCoordenadas;
+        private readonly Location[] _locationsParaCalculoDeMediaAritmetica;
 
         public ColetorDeCoordenadas()
         {
             _online = false;
             _nivelDaAmostra = 1;
             _coletorInicializado = false;
-            _snapshots = new Snapshot[5];
+            _snapshotsObtidosDoGps = new Snapshot[5];
             _msgBox = App.Services.GetService<IMessageBoxService>();
             _leitorDeCoordenadas = App.Services.GetService<ILeitorDeCoordenadas>();
             _sequencerDeEntidades = App.Services.GetService<ISequencerDeEntidades>();
             _operadorDeDiretorios = App.Services.GetService<IOperadorDeDiretorios>();
             _conversorDeCoordenadas = new();
+            _locationsParaCalculoDeMediaAritmetica = new Location[PropriedadesDaAplicacao.MediaAritmeticaPadrao];
         }
         #endregion
 
@@ -43,14 +45,21 @@ namespace AtitudeGpsMauiApp.Services.Implementations
                 Location loc = await _leitorDeCoordenadas.TentaObterLocalizacaoUmaUnicaVezAsync();
                 loc = _conversorDeCoordenadas.AplicaLimiteDeDigitosComArredondamento(loc, PropriedadesDaAplicacao.FatorDeCasasDecimais);
 
-                if (_snapshots[0] is null)
+                if (_snapshotsObtidosDoGps[0] is null)
                 {
-                    for (int i = 0; i < _snapshots.Length; i++)
-                        _snapshots[i] = new Snapshot()
+                    for (int i = 0; i < _snapshotsObtidosDoGps.Length; i++)
+                        _snapshotsObtidosDoGps[i] = new Snapshot
                         {
                             Latitude = loc.Latitude,
                             Longitude = loc.Longitude,
                             Intervalo = PropriedadesDaAplicacao.IntervaloMinimo
+                        };
+
+                    for (int i = 0; i < _locationsParaCalculoDeMediaAritmetica.Length; i++)
+                        _locationsParaCalculoDeMediaAritmetica[i] = new Location
+                        {
+                            Latitude = loc.Latitude,
+                            Longitude = loc.Longitude
                         };
                 }
 
@@ -68,7 +77,10 @@ namespace AtitudeGpsMauiApp.Services.Implementations
                 if (!_coletorInicializado) throw new Exception("Array de snapshots vazio. Execute o método InicializaColetor.");
                 if (!_online) return;
 
-                Location loc = await _leitorDeCoordenadas.TentaObterLocalizacaoUmaUnicaVezAsync();
+                // Abre um espaço no array de locations para receber a nova location obtida do Gps
+                _locationsParaCalculoDeMediaAritmetica.ShiftUpLocationArrayItems();
+
+                Location loc = await _leitorDeCoordenadas.TentaObterLocalizacaoPorMediaAritmeticaAsync(_locationsParaCalculoDeMediaAritmetica);
                 loc = _conversorDeCoordenadas.AplicaLimiteDeDigitosComArredondamento(loc, PropriedadesDaAplicacao.FatorDeCasasDecimais);
 
                 var novoSnapshot = new Snapshot
@@ -80,53 +92,53 @@ namespace AtitudeGpsMauiApp.Services.Implementations
                     Intervalo = PropriedadesDaAplicacao.IntervaloMinimo
                 };
 
-                novoSnapshot.CalculaDistanciaEVelocidadeMedia(_snapshots[4]);
+                novoSnapshot.CalculaDistanciaEVelocidadeMedia(_snapshotsObtidosDoGps[4]);
 
-                _snapshots.ShiftUpSnapshotArrayItems();
+                _snapshotsObtidosDoGps.ShiftUpSnapshotArrayItems();
 
                 if (novoSnapshot.DistanciaEmMetros < PropriedadesDaAplicacao.DistanciaMinimaValida)
                 {
-                    novoSnapshot.Latitude = _snapshots[3].Latitude;
-                    novoSnapshot.Longitude = _snapshots[3].Longitude;
+                    novoSnapshot.Latitude = _snapshotsObtidosDoGps[3].Latitude;
+                    novoSnapshot.Longitude = _snapshotsObtidosDoGps[3].Longitude;
                     novoSnapshot.RedefineValoresDinamicos();
                 }
 
-                _snapshots[4] = novoSnapshot;
+                _snapshotsObtidosDoGps[4] = novoSnapshot;
 
                 // Eu poderia tirar a comparação do item 4 com o item 3 dos if's para evitar e repetição de código,
                 // porém esta forma mais verbosa melhora o entendimento aumentando a aderência aos princípios do
                 // Clean Code.
                 if (_nivelDaAmostra == 1)
                 {
-                    LogaGps(_snapshots[4]);
+                    LogaGps(_snapshotsObtidosDoGps[4]);
                 }
                 else if (_nivelDaAmostra == 2)
                 {
-                    LogaGps(_snapshots[4]);
+                    LogaGps(_snapshotsObtidosDoGps[4]);
 
-                    _snapshots[4].CalculaDistanciaEVelocidadeMedia(_snapshots[2]);
-                    _snapshots[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 2;
-                    LogaGps(_snapshots[4]);
+                    _snapshotsObtidosDoGps[4].CalculaDistanciaEVelocidadeMedia(_snapshotsObtidosDoGps[2]);
+                    _snapshotsObtidosDoGps[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 2;
+                    LogaGps(_snapshotsObtidosDoGps[4]);
                 }
                 else if (_nivelDaAmostra == 3)
                 {
-                    LogaGps(_snapshots[4]);
+                    LogaGps(_snapshotsObtidosDoGps[4]);
 
-                    _snapshots[4].CalculaDistanciaEVelocidadeMedia(_snapshots[1]);
-                    _snapshots[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 3;
-                    LogaGps(_snapshots[4]);
+                    _snapshotsObtidosDoGps[4].CalculaDistanciaEVelocidadeMedia(_snapshotsObtidosDoGps[1]);
+                    _snapshotsObtidosDoGps[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 3;
+                    LogaGps(_snapshotsObtidosDoGps[4]);
                 }
                 else if (_nivelDaAmostra == 4)
                 {
-                    LogaGps(_snapshots[4]);
+                    LogaGps(_snapshotsObtidosDoGps[4]);
 
-                    _snapshots[4].CalculaDistanciaEVelocidadeMedia(_snapshots[2]);
-                    _snapshots[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 2;
-                    LogaGps(_snapshots[4]);
+                    _snapshotsObtidosDoGps[4].CalculaDistanciaEVelocidadeMedia(_snapshotsObtidosDoGps[2]);
+                    _snapshotsObtidosDoGps[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 2;
+                    LogaGps(_snapshotsObtidosDoGps[4]);
 
-                    _snapshots[4].CalculaDistanciaEVelocidadeMedia(_snapshots[0]);
-                    _snapshots[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 4;
-                    LogaGps(_snapshots[4]);
+                    _snapshotsObtidosDoGps[4].CalculaDistanciaEVelocidadeMedia(_snapshotsObtidosDoGps[0]);
+                    _snapshotsObtidosDoGps[4].Intervalo = PropriedadesDaAplicacao.IntervaloMinimo * 4;
+                    LogaGps(_snapshotsObtidosDoGps[4]);
                 }
 
                 if (_nivelDaAmostra == 4)
@@ -137,7 +149,7 @@ namespace AtitudeGpsMauiApp.Services.Implementations
                 MessagingCenter.Send(
                     App.Current,
                     "ticks",
-                    string.Format("{0}m {1}Km/h", _snapshots[4].DistanciaEmMetros, _snapshots[4].KilometrosPorHora));
+                    string.Format("{0}m {1}Km/h", _snapshotsObtidosDoGps[4].DistanciaEmMetros, _snapshotsObtidosDoGps[4].KilometrosPorHora));
 
                 GC.Collect();
             }));
@@ -150,10 +162,8 @@ namespace AtitudeGpsMauiApp.Services.Implementations
 
         public void LimpaCoordenadas()
         {
-            for (int i = 0; i < _snapshots.Length; i++)
-            {
-                _snapshots[i] = null;
-            }
+            Array.Clear(_snapshotsObtidosDoGps);
+            Array.Clear(_locationsParaCalculoDeMediaAritmetica);
         }
 
         private async Task<bool> ExecutaEmTryCatchAsync(Func<Task> functionAsync)
