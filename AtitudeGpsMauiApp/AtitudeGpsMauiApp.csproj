@@ -63,6 +63,11 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android32.0|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <ApplicationId>com.aquioh.atitudegpsmauiapp</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-android32.0|AnyCPU'">
+	  <ApplicationId>com.aquioh.atitudegpsmauiapp</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
