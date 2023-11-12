@@ -28,11 +28,12 @@ public partial class ConfigPage : ContentPage
 
     private void AtualizaControles()
     {
-        this.stpTickInterval.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO, 5);
+        this.stpTickInterval.Value  = Preferences.Get(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO, 5);
         this.stpCasasDecimais.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_FATOR_CASAS_DECIMAIS, 5);
+        this.stpMediaAritmetica.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO, 1);
         this.stpDistanciaMinima.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_DISTANCIA_MINIMA_VALIDA, 10.0D);
-        this.pkrNivelPrecisao.SelectedItem = (GeolocationAccuracy)Preferences.Get(PropriedadesDaAplicacao.PROP_PRECISAO_DE_LOCALIZACAO, 3);
-        this.sptLocationRequestTimeout.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, 5);
+        this.pkrNivelPrecisao.SelectedItem   = (GeolocationAccuracy)Preferences.Get(PropriedadesDaAplicacao.PROP_PRECISAO_DE_LOCALIZACAO, 3);
+        this.stpLocationRequestTimeout.Value = Preferences.Get(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, 5);
     }
 
     private void BloqueiaFormulario(object sender)
@@ -57,15 +58,17 @@ public partial class ConfigPage : ContentPage
     {
         Preferences.Set(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO, (int)this.stpTickInterval.Value);
         Preferences.Set(PropriedadesDaAplicacao.PROP_FATOR_CASAS_DECIMAIS, (int)this.stpCasasDecimais.Value);
+        Preferences.Set(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO, (int)this.stpMediaAritmetica.Value);
         Preferences.Set(PropriedadesDaAplicacao.PROP_DISTANCIA_MINIMA_VALIDA, (double)this.stpDistanciaMinima.Value);
         Preferences.Set(PropriedadesDaAplicacao.PROP_PRECISAO_DE_LOCALIZACAO, (int)this.pkrNivelPrecisao.SelectedItem);
-        Preferences.Set(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, (int)this.sptLocationRequestTimeout.Value);
+        Preferences.Set(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, (int)this.stpLocationRequestTimeout.Value);
 
         PropriedadesDaAplicacao.IntervaloMinimo = (int)this.stpTickInterval.Value;
         PropriedadesDaAplicacao.FatorDeCasasDecimais = (int)this.stpCasasDecimais.Value;
+        PropriedadesDaAplicacao.MediaAritmeticaPadrao = (int)this.stpMediaAritmetica.Value;
         PropriedadesDaAplicacao.DistanciaMinimaValida = (double)this.stpDistanciaMinima.Value;
         PropriedadesDaAplicacao.PrecisaoDeGeolocalizacao = (GeolocationAccuracy)this.pkrNivelPrecisao.SelectedItem;
-        PropriedadesDaAplicacao.GeolocationRequestTimeout = (int)this.sptLocationRequestTimeout.Value;
+        PropriedadesDaAplicacao.GeolocationRequestTimeout = (int)this.stpLocationRequestTimeout.Value;
 
         _leitorDeCoordenadas.DefineParametrosDeGeolocationRequest(
             PropriedadesDaAplicacao.PrecisaoDeGeolocalizacao,
