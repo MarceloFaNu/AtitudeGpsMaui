@@ -69,7 +69,7 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
                     loc = Geolocation.GetLocationAsync(_locationRequest).GetAwaiter().GetResult();
                 }
 
-                // Independente de ter terminado o tempo, cancela o delay de thread
+                // Independente de ter terminado o tempo, cancela o delay de thread por garantia
                 cancelationToken.Cancel();
 
                 if (loc == null)
@@ -105,6 +105,102 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
 
                 throw;
             }
+        }
+
+        public async Task<Location> TentaObterLocalizacaoPorMediaAritmeticaAsync()
+        {
+            List<double> latitudes = new List<double>();
+            List<double> longitudes = new List<double>();
+            List<double> speeds = new List<double>();
+            List<double> courses = new List<double>();
+
+            try
+            {
+                for (int i = 0; i < PropriedadesDaAplicacao.MediaAritmeticaPadrao; i++)
+                {
+                    var loc = await Geolocation.GetLocationAsync(_locationRequest);
+
+                    if (loc == null)
+                        throw new NullReferenceException("Não foi possível acessar o serviço de GPS. Se o problema persistir, considere reiniciar o dispositivo.");
+
+                    latitudes.Add(loc.Latitude);
+                    longitudes.Add(loc.Longitude);
+                    if (loc.Speed != null) speeds.Add(loc.Speed.Value);
+                    if (loc.Course != null) courses.Add(loc.Course.Value);
+                }
+
+                Location locMediana = new Location
+                {
+                    Latitude = this.CalculaMediaAritmetica(latitudes),
+                    Longitude = this.CalculaMediaAritmetica(longitudes),
+                    Speed = this.CalculaMediaAritmetica(speeds),
+                    Course = this.CalculaMediaAritmetica(courses)
+                };
+
+                return locMediana;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<Location> TentaObterLocalizacaoPorMediaAritmeticaAsync(Location[] locations)
+        {
+            List<double> latitudes = new List<double>();
+            List<double> longitudes = new List<double>();
+            List<double> speeds = new List<double>();
+            List<double> courses = new List<double>();
+
+            var novaLocation = await this.TentaObterLocalizacaoUmaUnicaVezAsync();
+
+            try
+            {
+                if (novaLocation == null)
+                    throw new NullReferenceException("Não foi possível obter as coordenadas GPS. Caso o problema persista, considere reiniciar o dispositivo.");
+
+                locations[locations.Length - 1] = novaLocation;
+
+                foreach (var loc in locations)
+                {
+                    latitudes.Add(loc.Latitude);
+                    longitudes.Add(loc.Longitude);
+                    if (loc.Speed != null) speeds.Add(loc.Speed.Value);
+                    if (loc.Course != null) courses.Add(loc.Course.Value);
+                }
+
+                Location locMediana = new Location
+                {
+                    Latitude = this.CalculaMediaAritmetica(latitudes),
+                    Longitude = this.CalculaMediaAritmetica(longitudes),
+                    Speed = this.CalculaMediaAritmetica(speeds),
+                    Course = this.CalculaMediaAritmetica(courses)
+                };
+
+                return locMediana;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private double CalculaMediaAritmetica(List<double> medidas)
+        {
+            if (medidas == null || !medidas.Any())
+                return 0.0;
+
+            double somaDasMedidas = 0.0;
+            foreach (var medida in medidas)
+            {
+                somaDasMedidas += medida;
+            }
+
+            double media = somaDasMedidas / medidas.Count;
+
+            return Math.Round(media, PropriedadesDaAplicacao.FatorDeCasasDecimais);
         }
     }
 }

@@ -50,11 +50,15 @@ namespace AtitudeGpsMauiApp.Configuration
             if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT))
                 Preferences.Set(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, 5);
 
+            if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO))
+                Preferences.Set(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO, 1);
+
             PropriedadesDaAplicacao.IntervaloMinimo = Preferences.Get(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO, 5);
             PropriedadesDaAplicacao.FatorDeCasasDecimais = Preferences.Get(PropriedadesDaAplicacao.PROP_FATOR_CASAS_DECIMAIS, 5);
             PropriedadesDaAplicacao.DistanciaMinimaValida = Preferences.Get(PropriedadesDaAplicacao.PROP_DISTANCIA_MINIMA_VALIDA, 10.0D);
             PropriedadesDaAplicacao.PrecisaoDeGeolocalizacao = (GeolocationAccuracy)Preferences.Get(PropriedadesDaAplicacao.PROP_PRECISAO_DE_LOCALIZACAO, 3);
             PropriedadesDaAplicacao.GeolocationRequestTimeout = Preferences.Get(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, 5);
+            PropriedadesDaAplicacao.MediaAritmeticaPadrao = Preferences.Get(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO, 1);
         }
     }
 }
