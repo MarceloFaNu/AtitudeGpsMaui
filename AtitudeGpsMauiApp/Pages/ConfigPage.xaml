@@ -34,18 +34,6 @@
                     Text="{x:Static resources:AppResources.ConfigPageTitulo}" />
 
                 <Label
-                    Text="{x:Static resources:AppResources.pkrTickIntervalText}" />
-                <Label
-                    FontSize="Title"
-                    BindingContext="{x:Reference Name=stpTickInterval}"
-                    Text="{Binding Path=Value, StringFormat='{0}'}" />
-                <Stepper
-                    x:Name="stpTickInterval"
-                    Minimum="2"
-                    Maximum="5"
-                    Increment="1" />
-
-                <Label
                     Text="{x:Static resources:AppResources.pkrNivelPrecisaoText}" />
                 <Picker
                     FontSize="Title"
@@ -66,13 +54,25 @@
                 </Picker>
 
                 <Label
+                    Text="{x:Static resources:AppResources.pkrTickIntervalText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=stpTickInterval}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="stpTickInterval"
+                    Minimum="2"
+                    Maximum="5"
+                    Increment="1" />
+
+                <Label
                     Text="{x:Static resources:AppResources.pkrLocationRequestTimeoutText}" />
                 <Label
                     FontSize="Title"
-                    BindingContext="{x:Reference Name=sptLocationRequestTimeout}"
+                    BindingContext="{x:Reference Name=stpLocationRequestTimeout}"
                     Text="{Binding Path=Value, StringFormat='{0}'}" />
                 <Stepper
-                    x:Name="sptLocationRequestTimeout"
+                    x:Name="stpLocationRequestTimeout"
                     Minimum="5"
                     Maximum="30"
                     Increment="5" />
@@ -99,6 +99,18 @@
                     x:Name="stpCasasDecimais"
                     Minimum="4"
                     Maximum="7"
+                    Increment="1" />
+
+                <Label
+                    Text="{x:Static resources:AppResources.pkrMediaAritmeticaText}" />
+                <Label
+                    FontSize="Title"
+                    BindingContext="{x:Reference Name=stpMediaAritmetica}"
+                    Text="{Binding Path=Value, StringFormat='{0}'}" />
+                <Stepper
+                    x:Name="stpMediaAritmetica"
+                    Minimum="1"
+                    Maximum="6"
                     Increment="1" />
 
                 <Button
