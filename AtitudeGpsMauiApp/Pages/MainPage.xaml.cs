@@ -66,6 +66,13 @@ public partial class MainPage : ContentPage
             Application.Current.Quit();
         }
 
+        IEnumerable<ConnectionProfile> profiles = Connectivity.Current.ConnectionProfiles;
+        if (!profiles.Contains(ConnectionProfile.Cellular))
+        {
+            await _msgBox.ShowAsync("Sinal de telefonia ausente ou muito fraco. Verifique as configurações ou desative o modo Avião.");
+            Application.Current.Quit();
+        }
+
         //PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
         //PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
 
