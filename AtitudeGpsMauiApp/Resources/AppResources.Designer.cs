@@ -133,6 +133,15 @@ namespace AtitudeGpsMauiApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coordenadas para media aritmética.
+        /// </summary>
+        internal static string pkrMediaAritmeticaText {
+            get {
+                return ResourceManager.GetString("pkrMediaAritmeticaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nível de Sensibilidade da Leitura.
         /// </summary>
         internal static string pkrNivelPrecisaoText {

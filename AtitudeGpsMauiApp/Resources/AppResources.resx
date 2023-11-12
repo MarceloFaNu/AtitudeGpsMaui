@@ -141,6 +141,9 @@
   <data name="pkrLocationRequestTimeoutText" xml:space="preserve">
     <value>Timeout da Solicitação de Coordenadas (seg)</value>
   </data>
+  <data name="pkrMediaAritmeticaText" xml:space="preserve">
+    <value>Coordenadas para media aritmética</value>
+  </data>
   <data name="pkrNivelPrecisaoText" xml:space="preserve">
     <value>Nível de Sensibilidade da Leitura</value>
     <comment>Low, Medium, High, Best</comment>
