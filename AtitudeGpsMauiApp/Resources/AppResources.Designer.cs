@@ -61,7 +61,7 @@ namespace AtitudeGpsMauiApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Esses dados deverão ser enviados ao autor do aplicativo através do botão Enviar Estatística para análise após algumas horas de atividade, preferencialmente durante trajetos a pé ou em veículos..
+        ///   Looks up a localized string similar to Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade..
         /// </summary>
         internal static string AvisoPrincipal {
             get {

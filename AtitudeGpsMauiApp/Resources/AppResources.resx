@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AvisoPrincipal" xml:space="preserve">
-    <value>Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Esses dados deverão ser enviados ao autor do aplicativo através do botão Enviar Estatística para análise após algumas horas de atividade, preferencialmente durante trajetos a pé ou em veículos.</value>
+    <value>Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade.</value>
   </data>
   <data name="ConfigPageAviso" xml:space="preserve">
     <value>Ajuste as opções conforme necessário</value>
