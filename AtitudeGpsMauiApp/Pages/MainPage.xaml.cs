@@ -87,13 +87,16 @@ public partial class MainPage : ContentPage
     {
         try
         {
+            btnParar.IsEnabled = false;
             if (_botaoMonitorOcupado)
             {
                 await ExibeMsgDesativeMonitorAsync();
+                btnParar.IsEnabled = true;
                 return;
             }
 
             _botaoMonitorOcupado = true;
+            lblStatus.IsVisible = false;
 
             _operadorDeDiretorios.ApagaZipDeEntrega(_inicioDoMonitoramento.Ticks.ToString());
             _ = _sequencerDeEntidades.ObtemProximoIdParaResumo();
@@ -120,6 +123,8 @@ public partial class MainPage : ContentPage
             {
                 await _msgBox.ShowAsync("Serviço coletor de Gps já está em execução.");
             }
+
+            btnParar.IsEnabled = true;
         }
         catch (FeatureNotEnabledException)
         {
@@ -140,6 +145,7 @@ public partial class MainPage : ContentPage
     {
         if (!_botaoMonitorOcupado) return;
 
+        this.lblStatus.IsVisible = false;
         _coletorManager.EncerraServico();
 
         var resumo = CriaResumo();
@@ -224,6 +230,7 @@ public partial class MainPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
+            this.lblStatus.IsVisible = true;
             this.lblStatus.Background = Colors.Green;
             this.lblStatus.Text = "ONLINE";
         });
@@ -233,6 +240,7 @@ public partial class MainPage : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
+            this.lblStatus.IsVisible = true;
             this.lblStatus.Background = Colors.Red;
             this.lblStatus.Text = "OFFLINE";
         });
