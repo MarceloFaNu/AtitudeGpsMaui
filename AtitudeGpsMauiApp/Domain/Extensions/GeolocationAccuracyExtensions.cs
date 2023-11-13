@@ -1,4 +1,6 @@
-﻿namespace AtitudeGpsMauiApp.Domain.Extensions
+﻿using System.Runtime.CompilerServices;
+
+namespace AtitudeGpsMauiApp.Domain.Extensions
 {
     public static class GeolocationAccuracyExtensions
     {
@@ -6,11 +8,26 @@
         {
             return geolocationAccuracy switch
             {
-                GeolocationAccuracy.Low    => "Low",
-                GeolocationAccuracy.Medium => "Medium",
-                GeolocationAccuracy.High   => "High",
-                GeolocationAccuracy.Best   => "Best",
-                _ => string.Empty
+                GeolocationAccuracy.Default => "Padrão",
+                GeolocationAccuracy.Lowest  => "Mínimo",
+                GeolocationAccuracy.Low     => "Baixo",
+                GeolocationAccuracy.Medium  => "Médio",
+                GeolocationAccuracy.High    => "Alto",
+                GeolocationAccuracy.Best    => "Máximo",
+                                          _ => string.Empty
+            };
+        }
+
+        public static GeolocationAccuracy? ToGeolocationAccuracy(this string geolocString)
+        {
+            return geolocString switch
+            {
+                "Mínimo" => GeolocationAccuracy.Lowest,
+                "Baixo" => GeolocationAccuracy.Low,
+                "Médio" => GeolocationAccuracy.Medium,
+                "Alto" => GeolocationAccuracy.High,
+                "Máximo" => GeolocationAccuracy.Best,
+                        _ => GeolocationAccuracy.Default
             };
         }
     }
