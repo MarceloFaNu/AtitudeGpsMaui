@@ -61,20 +61,20 @@ namespace AtitudeGpsMauiApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade..
-        /// </summary>
-        internal static string AvisoPrincipal {
-            get {
-                return ResourceManager.GetString("AvisoPrincipal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ajuste as opções conforme necessário.
         /// </summary>
         internal static string ConfigPageAviso {
             get {
                 return ResourceManager.GetString("ConfigPageAviso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure as opções de precisão e sensibilidade das leituras. Nível de Sensibilidade afeta o consumo de bateria e a resiliência na obtenção das coordenadas. O Intervalo Mínimo entre os Ticks define o tempo de espera entre a obtenção de uma coordenada e outra. O Timeout da Solicitação de Coordenadas define o tempo máximo que o aplicativo deve aguardar pela resposta do dispositivo antes de considerar uma falha crítica. A Distância Mínima Considerada determina a distância mínima válida entre uma coordenada e a [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ConfigPageSubtitulo {
+            get {
+                return ResourceManager.GetString("ConfigPageSubtitulo", resourceCulture);
             }
         }
         
@@ -102,6 +102,24 @@ namespace AtitudeGpsMauiApp.Resources {
         internal static string CopilotoPageTitulo {
             get {
                 return ResourceManager.GetString("CopilotoPageTitulo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade..
+        /// </summary>
+        internal static string MonitorSubtitulo {
+            get {
+                return ResourceManager.GetString("MonitorSubtitulo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitor de Coordenadas.
+        /// </summary>
+        internal static string MonitorTitulo {
+            get {
+                return ResourceManager.GetString("MonitorTitulo", resourceCulture);
             }
         }
         
@@ -156,15 +174,6 @@ namespace AtitudeGpsMauiApp.Resources {
         internal static string pkrTickIntervalText {
             get {
                 return ResourceManager.GetString("pkrTickIntervalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Monitor de Coordenadas.
-        /// </summary>
-        internal static string Titulo {
-            get {
-                return ResourceManager.GetString("Titulo", resourceCulture);
             }
         }
     }

@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AvisoPrincipal" xml:space="preserve">
-    <value>Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade.</value>
-  </data>
   <data name="ConfigPageAviso" xml:space="preserve">
     <value>Ajuste as opções conforme necessário</value>
+  </data>
+  <data name="ConfigPageSubtitulo" xml:space="preserve">
+    <value>Configure as opções de precisão e sensibilidade das leituras. Nível de Sensibilidade afeta o consumo de bateria e a resiliência na obtenção das coordenadas. O Intervalo Mínimo entre os Ticks define o tempo de espera entre a obtenção de uma coordenada e outra. O Timeout da Solicitação de Coordenadas define o tempo máximo que o aplicativo deve aguardar pela resposta do dispositivo antes de considerar uma falha crítica. A Distância Mínima Considerada determina a distância mínima válida entre uma coordenada e a coordenada anterior. Casas Decimais das Coordenadas define o nível de precisão dos dados de latitude e longitude, alcançando a casa dos milímetros em sua precisão máxima. Coordenadas para Média Aritmetica define quantas leituras deverão ser consideradas para se calcular a média entre elas.</value>
   </data>
   <data name="ConfigPageTitulo" xml:space="preserve">
     <value>Configurações do Monitor</value>
@@ -131,6 +131,12 @@
   </data>
   <data name="CopilotoPageTitulo" xml:space="preserve">
     <value>Copiloto do Monitor</value>
+  </data>
+  <data name="MonitorSubtitulo" xml:space="preserve">
+    <value>Este aplicativo de testes irá coletar sua posição GPS a cada intervalo de tempo predefinido. Os resultados das leituras poderão ser comparilhadas para análise ao término dos ciclos praticados pelo usuário. Você pode criar vários ciclos de leituras com diferentes configurações de precisão e sensibilidade.</value>
+  </data>
+  <data name="MonitorTitulo" xml:space="preserve">
+    <value>Monitor de Coordenadas</value>
   </data>
   <data name="pkrCasasDecimaisText" xml:space="preserve">
     <value>Casas Decimais das Coordenadas</value>
@@ -150,8 +156,5 @@
   </data>
   <data name="pkrTickIntervalText" xml:space="preserve">
     <value>Intervalo Mínimo Entre os Ticks (seg)</value>
-  </data>
-  <data name="Titulo" xml:space="preserve">
-    <value>Monitor de Coordenadas</value>
   </data>
 </root>
