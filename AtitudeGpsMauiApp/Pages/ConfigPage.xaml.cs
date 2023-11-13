@@ -41,7 +41,7 @@ public partial class ConfigPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() =>
         {
             this.stkPrincipal.IsVisible = false;
-            this.lblMonitorEmAtividade.IsVisible = true;
+            this.stkMonitorEmAtividade.IsVisible = true;
         });
     }
 
@@ -50,7 +50,7 @@ public partial class ConfigPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() =>
         {
             this.stkPrincipal.IsVisible = true;
-            this.lblMonitorEmAtividade.IsVisible = false;
+            this.stkMonitorEmAtividade.IsVisible = false;
         });
     }
 

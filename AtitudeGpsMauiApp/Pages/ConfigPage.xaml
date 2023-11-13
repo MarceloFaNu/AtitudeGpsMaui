@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resources="clr-namespace:AtitudeGpsMauiApp.Resources"
              xmlns:essentials="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:extensions="clr-namespace:AtitudeGpsMauiApp.Domain.Extensions"
              x:Class="AtitudeGpsMauiApp.Pages.ConfigPage"
              Title="Opções">
     <ContentPage.Resources>
@@ -12,26 +13,55 @@
         <Style TargetType="Stepper">
             <Setter Property="Margin" Value="0,0,0,20" />
         </Style>
+        <extensions:GeolocationAccuracyToStringConverter x:Key="GeolocAccToString" />
     </ContentPage.Resources>
     <ScrollView>
         <Grid
             BackgroundColor="Black">
-            <Label
-                x:Name="lblMonitorEmAtividade"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
+            <VerticalStackLayout
+                Margin="20"
                 IsVisible="false"
-                Text="Tela indisponível: monitor ativo." />
+                x:Name="stkMonitorEmAtividade">                
+                <Label
+                    Margin="0,0,0,30"
+                    x:Name="lblMonitorEmAtividade"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Text="Tela indisponível: monitor ativo." />
+                <Label
+                    BindingContext="{x:Reference Name=pkrNivelPrecisao}"
+                    Text="{Binding Path=SelectedItem, Converter={StaticResource GeolocAccToString}, StringFormat='Sensibilidade GPS: {0}'}" />
+                <Label
+                    BindingContext="{x:Reference Name=stpTickInterval}"
+                    Text="{Binding Path=Value, StringFormat='Intervalo mínimo: {0}'}" />
+                <Label
+                    BindingContext="{x:Reference Name=stpLocationRequestTimeout}"
+                    Text="{Binding Path=Value, StringFormat='Timeout: {0}'}"/>
+                <Label
+                    BindingContext="{x:Reference Name=stpDistanciaMinima}"
+                    Text="{Binding Path=Value, StringFormat='Distância mínima: {0}'}"/>
+                <Label
+                    BindingContext="{x:Reference Name=stpCasasDecimais}"
+                    Text="{Binding Path=Value, StringFormat='Casas decimais: {0}'}"/>
+                <Label
+                    BindingContext="{x:Reference Name=stpMediaAritmetica}"
+                    Text="{Binding Path=Value, StringFormat='Média aritmética: {0}'}"/>
+            </VerticalStackLayout>
             <StackLayout
                 x:Name="stkPrincipal"
                 Padding="10"
                 BackgroundColor="Black"
                 Orientation="Vertical">
                 <Label
-                    Margin="20"
+                    Margin="0,10,0,10"
                     FontSize="Title"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resources:AppResources.ConfigPageTitulo}" />
+                <Label
+                    Margin="0,10,0,10"
+                    HorizontalTextAlignment="Start"
+                    Text="{x:Static resources:AppResources.ConfigPageSubtitulo}" />
+                <BoxView HeightRequest="1" Color="DarkGrey" Margin="0,10,0,30"/>
 
                 <Label
                     Text="{x:Static resources:AppResources.pkrNivelPrecisaoText}" />
