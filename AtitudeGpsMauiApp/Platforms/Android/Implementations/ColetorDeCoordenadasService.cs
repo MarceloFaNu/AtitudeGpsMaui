@@ -64,6 +64,8 @@ namespace AtitudeGpsMauiApp.Platforms.Android.Implementations
                     if (!sucesso)
                         this.StopSelf();
                 }
+
+                MessagingCenter.Send(App.Current, "ledOff");
             });
 
             if (sucesso)
@@ -85,7 +87,6 @@ namespace AtitudeGpsMauiApp.Platforms.Android.Implementations
             base.OnDestroy();
             IsServicoEmExecucao = false;
             _coletorDeCoordenadas.FinalizaColetor();
-            MessagingCenter.Send(App.Current, "ledOff");
         }
     }
 }
