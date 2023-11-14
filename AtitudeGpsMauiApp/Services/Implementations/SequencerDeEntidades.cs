@@ -1,48 +1,51 @@
-﻿using AtitudeGpsMauiApp.Services.Interfaces;
+﻿using AtitudeGpsMauiApp.Domain.Constantes;
+using AtitudeGpsMauiApp.Services.Interfaces;
 
 namespace AtitudeGpsMauiApp.Services.Implementations
 {
     internal class SequencerDeEntidades : ISequencerDeEntidades
     {
-        private static int _idResumo;
-        private static int _idCopiloto;
-        private static int _idMonitor;
-
         public int ObtemIdAtualParaResumo()
         {
-            return _idResumo;
+            return PropriedadesDaAplicacao.IdResumo;
         }
 
         public int ObtemIdAtualParaCopiloto()
         {
-            return _idCopiloto;
+            return PropriedadesDaAplicacao.IdCopiloto;
         }
 
         public int ObtemIdAtualParaMonitor()
         {
-            return _idMonitor;
+            return PropriedadesDaAplicacao.IdMonitor;
         }
 
         public int ObtemProximoIdParaResumo()
         {
-            return ++_idResumo;
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_RESUMO, ++PropriedadesDaAplicacao.IdResumo);
+            return PropriedadesDaAplicacao.IdResumo;
         }
 
         public int ObtemProximoIdParaCopiloto()
         {
-            return ++_idCopiloto;
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_COPILOTO, ++PropriedadesDaAplicacao.IdCopiloto);
+            return PropriedadesDaAplicacao.IdCopiloto;
         }
 
         public int ObtemProximoIdParaMonitor()
         {
-            return ++_idMonitor;
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_MONITOR, ++PropriedadesDaAplicacao.IdMonitor);
+            return PropriedadesDaAplicacao.IdMonitor;
         }
 
         public void ReiniciaTodasSequencias()
         {
-            _idResumo = 0;
-            _idCopiloto = 0;
-            _idMonitor = 0;
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_RESUMO, 0);
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_COPILOTO, 0);
+            Preferences.Set(PropriedadesDaAplicacao.PROP_ID_MONITOR, 0);
+            PropriedadesDaAplicacao.IdResumo = 0;
+            PropriedadesDaAplicacao.IdCopiloto = 0;
+            PropriedadesDaAplicacao.IdMonitor = 0;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace AtitudeGpsMauiApp.Configuration
 
         private static void ConfigureAppProperties()
         {
+            #region config
             if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO))
                 Preferences.Set(PropriedadesDaAplicacao.PROP_INTERVALO_MINIMO, 5);
 
@@ -59,6 +60,22 @@ namespace AtitudeGpsMauiApp.Configuration
             PropriedadesDaAplicacao.PrecisaoDeGeolocalizacao = (GeolocationAccuracy)Preferences.Get(PropriedadesDaAplicacao.PROP_PRECISAO_DE_LOCALIZACAO, 3);
             PropriedadesDaAplicacao.GeolocationRequestTimeout = Preferences.Get(PropriedadesDaAplicacao.PROP_GEOLOCATION_REQUEST_TIMEOUT, 5);
             PropriedadesDaAplicacao.MediaAritmeticaPadrao = Preferences.Get(PropriedadesDaAplicacao.PROP_MEDIA_ARITMETICA_PADRAO, 1);
+            #endregion
+
+            #region ids
+            if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_ID_RESUMO))
+                Preferences.Set(PropriedadesDaAplicacao.PROP_ID_RESUMO, 0);
+
+            if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_ID_COPILOTO))
+                Preferences.Set(PropriedadesDaAplicacao.PROP_ID_COPILOTO, 0);
+
+            if (!Preferences.ContainsKey(PropriedadesDaAplicacao.PROP_ID_MONITOR))
+                Preferences.Set(PropriedadesDaAplicacao.PROP_ID_MONITOR, 0);
+
+            PropriedadesDaAplicacao.IdResumo = Preferences.Get(PropriedadesDaAplicacao.PROP_ID_RESUMO, 0);
+            PropriedadesDaAplicacao.IdCopiloto = Preferences.Get(PropriedadesDaAplicacao.PROP_ID_COPILOTO, 0);
+            PropriedadesDaAplicacao.IdMonitor = Preferences.Get(PropriedadesDaAplicacao.PROP_ID_MONITOR, 0);
+            #endregion
         }
     }
 }

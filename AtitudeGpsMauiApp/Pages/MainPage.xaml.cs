@@ -62,16 +62,16 @@ public partial class MainPage : ContentPage
         if ((locationAlwaysStatusDaPermissao == PermissionStatus.Denied && locationWhenInUseStatusDaPermissao == PermissionStatus.Denied) ||
             StorageWriteStatusDaPermissao == PermissionStatus.Denied)
         {
-            await _msgBox.ShowAsync("O aplicativo precisa de permissão para utilizar Localização, Armazenamento e Notificações. Tchau, obrigado.");
+            await _msgBox.ShowAsync("O aplicativo precisa de permissão para utilizar Localização, Armazenamento e Notificações. Libere as permissões e inicie a aplicação novamente.");
             Application.Current.Quit();
         }
 
-        IEnumerable<ConnectionProfile> profiles = Connectivity.Current.ConnectionProfiles;
-        if (!profiles.Contains(ConnectionProfile.Cellular))
-        {
-            await _msgBox.ShowAsync("Sinal de telefonia ausente ou muito fraco. Verifique as configurações ou desative o modo Avião.");
-            Application.Current.Quit();
-        }
+        //IEnumerable<ConnectionProfile> profiles = Connectivity.Current.ConnectionProfiles;
+        //if (!profiles.Contains(ConnectionProfile.Cellular))
+        //{
+        //    await _msgBox.ShowAsync("Sinal de telefonia ausente ou muito fraco. Verifique as configurações ou desative o modo Avião.");
+        //    Application.Current.Quit();
+        //}
 
         //PermissionStatus locationSemprePermitido = await Permissions.RequestAsync<Permissions.LocationAlways>();
         //PermissionStatus storageSemprePermitido = await Permissions.RequestAsync<Permissions.StorageWrite>();
