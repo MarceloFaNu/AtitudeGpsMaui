@@ -283,7 +283,8 @@ public partial class MainPage : ContentPage
             IntervaloMinimoEmSegundos = PropriedadesDaAplicacao.IntervaloMinimo,
             DistanciaMinimaConsiderada = PropriedadesDaAplicacao.DistanciaMinimaValida,
             SensibilidadeGps = PropriedadesDaAplicacao.PrecisaoDeGeolocalizacao,
-            GeolocationRequestTimeout = PropriedadesDaAplicacao.GeolocationRequestTimeout
+            GeolocationRequestTimeout = PropriedadesDaAplicacao.GeolocationRequestTimeout,
+            MediaAritmetica = PropriedadesDaAplicacao.MediaAritmeticaPadrao
         };
     }
 

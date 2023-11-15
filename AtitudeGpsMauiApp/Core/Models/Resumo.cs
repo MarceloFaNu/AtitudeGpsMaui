@@ -10,6 +10,7 @@
         public int GeolocationRequestTimeout { get; set; }
         public double DistanciaMinimaConsiderada { get; set; }
         public GeolocationAccuracy SensibilidadeGps { get; set; }
+        public int MediaAritmetica {  get; set; }
 
         public Resumo(DateTime inicioDoMonitoramento, DateTime finalDoMonitoramento)
         {
