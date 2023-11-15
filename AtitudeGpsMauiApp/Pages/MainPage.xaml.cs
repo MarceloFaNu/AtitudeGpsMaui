@@ -13,7 +13,7 @@ public partial class MainPage : ContentPage
     #region Initialize
     private int _ticks;
     private bool _botaoMonitorOcupado;
-    private static DateTime _inicioDoMonitoramento;
+    private static DateTime _inicioDoMonitoramento = DateTime.Now;
 
     private readonly IMessageBoxService _msgBox;
     private readonly ILeitorDeCoordenadas _leitorDeCoordenadas;
@@ -98,7 +98,7 @@ public partial class MainPage : ContentPage
             _botaoMonitorOcupado = true;
             lblStatus.IsVisible = false;
 
-            _operadorDeDiretorios.ApagaZipDeEntrega(_inicioDoMonitoramento.Ticks.ToString());
+            _operadorDeDiretorios.ApagaZipDeEntrega();
             _ = _sequencerDeEntidades.ObtemProximoIdParaResumo();
             _ = _sequencerDeEntidades.ObtemProximoIdParaCopiloto();
             this.LogaCopilotoInicial();

@@ -91,13 +91,9 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
             return caminhoDoArquivoZip;
         }
 
-        public void ApagaZipDeEntrega(string idDoArquivo)
+        public void ApagaZipDeEntrega()
         {
-            string caminhoDoArquivoZip = Path.Combine(_diretorioApp, "AtitudeGpsLogs_" + idDoArquivo + ".zip");
-            if (File.Exists(caminhoDoArquivoZip))
-            {
-                File.Delete(caminhoDoArquivoZip);
-            }
+            Directory.GetFiles(_diretorioApp, "*.zip").ToList().ForEach(f => File.Delete(f));
         }
 
         public void LimpaLogs(string idDoArquivoZip)
@@ -106,7 +102,7 @@ namespace AtitudeGpsMauiApp.Infrastructure.Implementations
             File.WriteAllText(_monitorLog, "");
             File.WriteAllText(_copilotoLog, "");
 
-            ApagaZipDeEntrega(idDoArquivoZip);
+            ApagaZipDeEntrega();
         }
     }
 }

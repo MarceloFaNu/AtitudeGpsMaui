@@ -21,7 +21,7 @@ namespace AtitudeGpsMauiApp.Infrastructure.Interfaces
         long ObtemTamanhoDoLogDoCopilotoEmBytes();
 
         string CriaZipParaEntrega(string idDoArquivo);
-        void ApagaZipDeEntrega(string idDoArquivo);
+        void ApagaZipDeEntrega();
 
         void LimpaLogs(string idDoArquivoZip);
     }
