@@ -123,8 +123,6 @@ public partial class MainPage : ContentPage
             {
                 await _msgBox.ShowAsync("Serviço coletor de Gps já está em execução.");
             }
-
-            btnParar.IsEnabled = true;
         }
         catch (FeatureNotEnabledException)
         {
@@ -138,6 +136,10 @@ public partial class MainPage : ContentPage
             _botaoMonitorOcupado = false;
             MessagingCenter.Send(App.Current, "ledOff");
             await _msgBox.ShowAsync(ex.Message);
+        }
+        finally
+        {
+            btnParar.IsEnabled = true;
         }
     }
 
